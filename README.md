@@ -54,33 +54,84 @@
      The decision rule is worth a point on its own and it's the thing most
      people leave out. Every taxonomy has a hardest boundary. Name yours. -->
 
-### `label_one`
+### `argued`
 
-**Definition:**
-
-**Example 1:**
->
-
-**Example 2:**
->
-
-### `label_two`
-
-**Definition:**
+**Definition:** Makes a claim and supports it with something specific a reader
+could check: a link, a quote, a named product, feature, policy or person, a
+number or date, or a concrete account of how the thing works. Vague support
+("for years", "everyone knows") doesn't count.
 
 **Example 1:**
->
+> This behavior is unfortunately normal for epic, this is the same company that said their competitors giving users more information about what they are buying "irresponsible"
+> https://www.tomshardware.com/tech-industry/artificial-intelligence/epic-boss-tim-sweeney-blasts-steam-for-putting-ai-tags-on-games-says-move-is-irresponsible-of-valve
 
 **Example 2:**
+> The beta launcher has a bunch of features disabled/absent compared to the main launcher, not the least being the shopping cart. Not surprising that it would load faster when it has less to do.
+
+### `unbacked`
+
+**Definition:** States an opinion, judgment or prediction as if it were true,
+with no specific support. It might be right. It isn't argued.
+
+**Example 1:**
+> We have to face the fact that soon enough, any type of software question will be over.  AI will be able to generate whatever software/feature  you can think of instantly. Not sure what's gonna happen to dev jobs but be ready for some huge shit to hit the fan. We need to break free from capitalism before it kills us all.
+
+**Example 2:**
+> Copyright is going away in a way that only benefits AI companies. WE still get burned at the stake for downloading shit from limewire even if we're training our own AI models.
+
+### `firsthand`
+
+**Definition:** Reports what happened when the writer personally used, played,
+bought or fixed something, either as the whole post or as the support for a
+claim.
+
+**Example 1:**
+> My sx controller got stick drift a month after getting it. I have to wiggle it like a mad man to get it to stop or my character in game will slowly move out of cover.
 >
+> What I'm saying is, I'm not impressed with these controllers. Had better $30 controllers.
+
+**Example 2:**
+> I had Bluetooth issues with my computer, usb adapters were not working to pair controllers. I did manage to fix it by installing motherboard's driver manager, Gigabyte Control Center, and then installing their bluetooth drivers from there. So on the off chance you have a gigabyte motherboard that also has GCC, you might be able to try that to fix your bluetooth.
+
+### `quip`
+
+**Definition:** A sarcastic line, insult or bare emotional reaction. Strip out
+the tone and no claim is left.
+
+**Example 1:**
+> Vibe-coding a program that manages and deletes massive amounts of files, what could possibly go wrong?
+
+**Example 2:**
+> Also handles payment information. Oh boy.
 
 ### The hardest boundary
 
-**Which two labels:**
+**Which two labels:** `argued` and `unbacked`. Many posts give a reason. The
+question is whether the reason is specific enough to count.
 
-**The decision rule I used every time:**
-<!-- e.g. "If the post names a specific checkable fact, it's `analysis`, even
-     if the tone is heated." -->
+The post that sits between them:
+> That actually all looks pretty reasonable for what they're trying to do.  There's very little novel there, they're mostly leveraging existing security features
+
+**The decision rule I used every time:** A reason only makes a post `argued`
+if it names something specific you could look up or test: a link, a named
+product/feature/policy/person, a number or date, or a concrete account of how
+the thing works. A reason that names nothing you could check ("existing
+security features", "it's obvious", "everyone knows") counts as no support, so
+the post is `unbacked`. The same goes for a factual-sounding claim with no
+number, date, name, quote or link ("they've been losing money for years").
+Under this rule the post above is `unbacked`.
+
+**Two more rules for the other boundaries:**
+- **Tone never decides.** If a hostile or sarcastic post contains a specific
+  checkable fact that supports its point, it's `argued`. If it contains a claim
+  with no support, it's `unbacked`. It's `quip` only when removing the tone
+  leaves no claim at all.
+- **Personal experience beats everything else.** If the post's main support
+  is "I did / I had / I tried", it's `firsthand`, even if it names specific
+  products.
+
+**Not collected:** pure questions, and replies that make no sense without the
+comment they answer.
 
 
 
