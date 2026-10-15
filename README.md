@@ -126,6 +126,10 @@ Under this rule the post above is `unbacked`.
   checkable fact that supports its point, it's `argued`. If it contains a claim
   with no support, it's `unbacked`. It's `quip` only when removing the tone
   leaves no claim at all.
+- **The headline isn't evidence.** A fact that only repeats what the thread is
+  about doesn't count as support, and neither does a quote of the thing being
+  complained about. The fact has to add something. (Added during labelling;
+  see hard case 2.)
 - **Personal experience beats everything else.** If the post's main support
   is "I did / I had / I tried", it's `firsthand`, even if it names specific
   products.
@@ -142,45 +146,78 @@ comment they answer.
 <!-- Where you collected from, how you labelled, your counts, and three hard
      cases. -->
 
-**Where the posts came from:**
+**Where the posts came from:** Comments from
+[games@lemmy.world](https://lemmy.world/c/games), a public general-gaming
+community. I pulled 652 comments through Lemmy's public API (newest, top and
+controversial, six pages of each). I kept comments between 60 and 1,500
+characters and dropped deleted ones, ones that open with a quote of the parent
+comment, and image-only ones. I sampled 260 of them, at most 10 per thread, from
+168 threads. Every post is kept whole. The note column holds each comment's
+source link.
 
-**How I labelled them:** <!-- Cold first? Pre-labelled with AI and corrected?
-Say so plainly — the disclosure is required, not penalised. -->
+**How I labelled them:** All 260 were labelled by Claude (an AI model), one at a
+time, by reading each against the definitions and decision rules above. **No
+human has checked these labels yet.** Nothing is marked `cold`, because a cold
+pass has to be done by a person with no help. Of the 260, 31 were skipped as
+not classifiable: pure questions, replies that only make sense in their thread,
+image-only posts, and one offer to share pirated software. That left 229.
+`unbacked` had 101 of them (44%), which breaks criterion 3, so I randomly
+dropped 21 `unbacked` rows (seed 5). That leaves 208.
 
 **Counts per label:**
 
 | Label | Count | Share |
 |---|---|---|
-|  |  |  |
-|  |  |  |
-|  |  |  |
-| **Total** |  | 100% |
+| `unbacked` | 80 | 38% |
+| `argued` | 53 | 25% |
+| `quip` | 43 | 21% |
+| `firsthand` | 32 | 15% |
+| **Total** | 208 | 100% |
 
 **Three hard cases**
 
-<!-- Any post that made you pause: what it was, which two labels it could have
-     been, and what you chose. These are worth more than the easy 190. -->
-
 **1.**
-> *The post:*
+> *The post:* "Boy, it sure is a good thing that Sony charges a subscription fee for any and all network multiplayer traffic." (thread: PSN has been down for 14 hours)
 >
-> *Could have been:*
+> *Could have been:* `quip` or `argued`
 >
-> *I chose, because:*
+> *I chose, because:* `argued`. It's pure sarcasm, but strip the tone and a
+> checkable fact is left (PlayStation charges for online play), and that fact
+> is the point: you're paying for a service that's down. It isn't just a
+> restatement of the headline. Under "tone never decides" that makes it
+> `argued`, even though it reads like a quip.
 
 **2.**
-> *The post:*
+> *The post:* "They will turn off the live service and make it work offline? I don't understand. Industry bootlickers told me it was impossible and would cost billions to implement, hurting small indie studios the most. Yet, Nintendo does it voluntarily with seemingly no difficulties." (thread: Pocket Camp going offline)
 >
-> *Could have been:*
+> *Could have been:* `argued` or `unbacked`
 >
-> *I chose, because:*
+> *I chose, because:* `unbacked`. Its only fact is the thread's own
+> headline. "Billions to implement" is attributed to nobody in particular. This
+> case made me add a rule: **a fact that only repeats what the thread is about
+> doesn't count as support.** Otherwise every reply to a news post would be
+> `argued`.
 
 **3.**
-> *The post:*
+> *The post:* "You are nuts to sleep on Castlevania. It's $30! Much cheaper and it'll be free."
 >
-> *Could have been:*
+> *Could have been:* `argued` or `unbacked`
 >
-> *I chose, because:*
+> *I chose, because:* `argued`. A price is a specific, checkable number, and
+> it's the reason given. I'm not comfortable with it: a 15-word post becomes
+> `argued` because it contains one number. This is where I expect the model,
+> and a second labeller, to disagree with me.
+
+**Two more that made me pause:**
+- *"I love steam, and 90% of my game purchases or from their store… I think
+  their market position should have some scrutiny."* Could be `firsthand` or
+  `unbacked`. I chose `unbacked`: the personal fact doesn't support the claim
+  about scrutiny, so experience isn't the support here.
+- *Game recommendations* ("[Heaven's Vault](…) is a game about archaeology and
+  translating a dead language…"). Could be `argued` or `firsthand`. I chose
+  `argued`: they describe specific mechanics with a store link, and never say
+  "I played". There are three of these in the file, and they're the weakest fit
+  in the taxonomy.
 
 ---
 
@@ -223,7 +260,11 @@ of next unit's variance. -->
 - *What came back:*
 - *What I changed:*
 
-**Pre-labelling disclosure:**
+**Pre-labelling disclosure:** Every label in `labels.csv` was assigned by
+Claude, not pre-labelled and then corrected by me. Each row's note says so.
+`cold_check.csv` holds 20 of those posts with the label blank, for a human cold
+pass. Until that pass is done and compared, there's no human check on these
+labels.
 
 <!-- ═══════════════════════ UNIT 6 — THE TEST ═══════════════════════
 
