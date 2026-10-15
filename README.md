@@ -42,7 +42,13 @@
 <!-- Your community, and what your classifier sorts posts into. Three or four
      sentences. -->
 
-
+TakeMeter sorts comments from [games@lemmy.world](https://lemmy.world/c/games),
+a public general-gaming community, by how a comment makes its point, not by
+whether it's right. It has four labels. `argued` backs a claim with something
+checkable. `unbacked` states a claim with no specific support. `firsthand`
+rests on the writer's own experience. `quip` is sarcasm or an insult with no
+claim left once you remove the tone. It's a fine-tuned
+`distilbert-base-uncased` trained on 208 labelled comments.
 
 ---
 
@@ -263,20 +269,40 @@ scores will jump around between seeds next unit.
      workflow and disclosing it costs you nothing. Not disclosing it is the
      problem. -->
 
-**Moment 1**
+**Moment 1: stress-testing the labels**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* I gave Claude the four draft definitions and asked it to
+  write eight posts that sit on the boundaries between them, then label them
+  under the rules.
+- *What came back:* Six of eight labelled cleanly. Two didn't. "Xbox has been
+  losing money on hardware for years, everyone knows that" sounded like
+  evidence, and the definitions didn't say whether a vague fact counts. A
+  Bethesda prediction backed by "I've played every game since Morrowind" was
+  caught between `firsthand` ("experience is the main content") and the rule
+  that personal experience comes first.
+- *What I changed:* The definitions were tightened. A fact only counts as
+  support if it has a number, date, name, quote or link. `firsthand` now covers
+  experience used as support for a claim, not only experience as the whole
+  post. Both changes are in the taxonomy above and in `label_definitions.txt`.
+  The weakness: the same model wrote the test posts and graded them, so this
+  was a weak test.
 
-**Moment 2**
+**Moment 2: labelling the 260 comments**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* For Claude to collect comments through Lemmy's public API
+  and label them against the definitions and decision rules.
+- *What came back:* 229 labelled comments, plus 31 skipped as unclassifiable.
+  It also turned up a gap the rules didn't cover: replies to a news thread
+  whose only "fact" is the headline itself (hard case 2), and sarcastic posts
+  quoting the thing they're mocking.
+- *What I changed:* A new decision rule, *the headline isn't evidence*, was
+  added to the taxonomy mid-labelling. `unbacked` came out at 44%, which broke
+  criterion 3, so 21 `unbacked` rows were dropped at random to bring it to 80.
 
 **Pre-labelling disclosure:** Every label in `labels.csv` was assigned by
-Claude, not pre-labelled and then corrected by me. Each row's note says so.
+Claude, not pre-labelled and then corrected by me. Claude also did most of
+this project's other work: choosing the community, the reading notes, the
+taxonomy, `criteria.md`, and running the training. Each row's note says so.
 `cold_check.csv` holds 20 of those posts with the label blank, for a human cold
 pass. Until that pass is done and compared, there's no human check on these
 labels.
