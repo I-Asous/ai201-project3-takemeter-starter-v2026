@@ -225,17 +225,32 @@ dropped 21 `unbacked` rows (seed 5). That leaves 208.
 
 <!-- Your starting model, your settings, and anything you changed and why. -->
 
-**Base model:**
+**Base model:** `distilbert-base-uncased`
 
-**Settings:** <!-- epochs, learning rate, batch size, seed -->
+**Settings:** 3 epochs, learning rate 2e-5, batch size 16, max length 128
+tokens, seed 42.
 
-**Anything I changed from the defaults, and why:**
+**Device:** `mps` (Apple Silicon GPU), torch 2.14.1, Python 3.13.0. This is
+also recorded in `results.json`. Training took about 15 seconds.
 
-**Split sizes:** <!-- train / val / test, and per-label counts in the test
-split. If a label had fewer than about 8 in test, say so — it explains a lot
-of next unit's variance. -->
+**Anything I changed from the defaults, and why:** No hyperparameters changed.
+I did change the environment: the project's `.venv` had been built on Python
+3.14, which `requirements.txt` doesn't support. Training crashed inside
+`datasets`/`dill` (`TypeError: Pickler._batch_setitems() takes 2 positional
+arguments but 3 were given`). I rebuilt `.venv` on Python 3.13 from the same
+requirements, with the same package versions.
 
+**Split sizes:** 144 train / 32 val / 32 test (70/15/15, stratified, seed 42).
 
+| Label | Train | Val | Test |
+|---|---|---|---|
+| `unbacked` | 56 | 12 | 12 |
+| `argued` | 37 | 8 | 8 |
+| `quip` | 29 | 7 | 7 |
+| `firsthand` | 22 | 5 | **5** |
+
+`firsthand` (5) and `quip` (7) have fewer than 8 test examples, so their
+scores will jump around between seeds next unit.
 
 ---
 
