@@ -1,0 +1,200 @@
+{
+  "model": "facebook/bart-large-mnli",
+  "n": 32,
+  "seed": 42,
+  "held_out": true,
+  "used_definitions": false,
+  "scores": {
+    "n": 32,
+    "accuracy": 0.25,
+    "f1_macro": 0.1081081081081081,
+    "per_label": {
+      "argued": {
+        "precision": 0.27586206896551724,
+        "recall": 1.0,
+        "f1": 0.4324324324324324,
+        "support": 8
+      },
+      "firsthand": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 5
+      },
+      "quip": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 7
+      },
+      "unbacked": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 12
+      }
+    }
+  },
+  "predictions": [
+    {
+      "text": "It was the patch that got me to stop playing. Why you would nerf weapons in a non-competitive game rather than make poor preforming weapons viable is beyond me.\n\nIt's akin to Steve Jobs telling everyone they're holding their phone wrong.",
+      "gold": "firsthand",
+      "predicted": "quip"
+    },
+    {
+      "text": "Steam having a monopoly is not a good thing for anyone. Competition is good, even if the other launchers are a bit annoying.",
+      "gold": "unbacked",
+      "predicted": "argued"
+    },
+    {
+      "text": "Terraria is like the anti-modern game. They absolutely refuse to evilly monetize their game at all. The playerbase is almost on their knees, *begging* them to move on from Terraria and make something else (not because Terraria is bad, but they've been at it for over a decade!) and they continue to churn out updates. The fanbase voted for a set of features to appear in Terraria 2, which they then turned around and scrapped, and added it as an update to Terraria. And all their updates are always *free*. And can't forget about their amazing mod support.\n\nAnd redigit is just, like, *the man*.",
+      "gold": "argued",
+      "predicted": "argued"
+    },
+    {
+      "text": "Oh gee! I wonder why is this happening?!\n\nI guess we'll never know! \n\nAnyway, let's release another copy-paste game at 90\u20ac/$ with 50\u20ac/$ in dlcs and another collector edition with some plastic toy for 300!",
+      "gold": "quip",
+      "predicted": "argued"
+    },
+    {
+      "text": "Gaming journalists sure want a Sony monopoly of gaming consoles, don't they?\n\nIf Xbox didn't exist, consumers could only choose PlayStation. Nintendo has shown they have no interest in making real console hardware to compete with Sony or Microsoft anymore, so consumers will get literally only one console choice. That's bad. Especially since they could set prices at whatever they want and nobody could challenge it.\n\nI get journalists hate Xbox, but Xbox needs to exist as a consumer option.",
+      "gold": "unbacked",
+      "predicted": "argued"
+    },
+    {
+      "text": "The three people were replaced with a guy who used to work at EA. And one of their first announcements was an unprompted \"we wont put loot boxes in the game\"..",
+      "gold": "argued",
+      "predicted": "argued"
+    },
+    {
+      "text": "Yes, it does make things worse. Did you notice that this doesn't even come with a steelbook? Collector's editions always came with both a steelbook and the game itself.  First they removed the disc as part of the package but kept the steelbook, now they are \"discontinuing\" discs altogether, and you say that it's ok? Do you enjoy getting screwed over? There's no excuse to not even include a digital copy. Do you know of anyone that would buy this but not actually play the game? You're either a bot shilling for corporations or extremely submissive and/or gullible.",
+      "gold": "unbacked",
+      "predicted": "argued"
+    },
+    {
+      "text": "Judging by the amount of copy paste Elden Ring was beyond the limit",
+      "gold": "unbacked",
+      "predicted": "argued"
+    },
+    {
+      "text": "How is Lemmy so anti corporate, but bends over backwards to defend steam as an immaculate corporation. I love steam, and 90% of my game purchases or from their store. 5% are from stores that let me redeem steam keys.\n\nI think their market position should have some scrutiny.",
+      "gold": "unbacked",
+      "predicted": "argued"
+    },
+    {
+      "text": "GTA 6 will hit PC approximately 2 days after console release because someone is going to decompile it with their agent and run it natively. Actually, a tool to run PS5 games natively on Linux and Windows already exists, though it likely won't work for GTA 6 (yet).",
+      "gold": "unbacked",
+      "predicted": "argued"
+    },
+    {
+      "text": "The video pretty much describes why Fandom is so bad and why many games are moving their wikis to alternative services, and why you should stop using it in general. Some examples include:\n\n* Ads everywhere, including autoplaying video ads that play another ad when they're done. There are also ads sneakily inserted in the middle of articles that are related to the wiki, like a Gamespot review (Gamespot is owned by Fandom)\n\n* A sidebar you can't remove that promotes their content\n\n* Fandom hijacked the community's Mcdonald's wiki to turn it into a giant advertisement\n\n* Accounts that are 4 days old can bypass restrictions and easily vandalize pages\n\n* Fandom sometimes introduces things nobody wants, such as AI generated answers that are usually wrong, take up the top half of the page, and with no way for wiki admins to remove it. They removed it after a lot of backlash but still...\n\n* When people fork their wikis to other sites, fandom refuses to let admins delete their old wikis. This makes new wikis difficult to start because Fandom usually ends up as the top result on search engines, even if they're old abandoned wikis.",
+      "gold": "argued",
+      "predicted": "argued"
+    },
+    {
+      "text": "This shows the power of steam reviews with it being driven by the actual community. People tried to downplay and belittle its effectiveness, but it being front and center on the store page does have more impact than there would be without steam reviews. If there were no steam reviews the PSN requirement would have been pushed through with it being easier to ignore some random internet comments on social media than a store page.",
+      "gold": "unbacked",
+      "predicted": "argued"
+    },
+    {
+      "text": "Meh...I'm sure it's still NMS. Feels so empty and boring anytime I've trying to replay after getting screwed over with buying this game after I was lied too. \n\nWon't be trying this new sticker or whatever new thing they are working on. No thanks.",
+      "gold": "firsthand",
+      "predicted": "quip"
+    },
+    {
+      "text": "Let me guess: Valve was not getting their cut from the ad money?",
+      "gold": "unbacked",
+      "predicted": "argued"
+    },
+    {
+      "text": "Imagine putting a mod that the devs of the game it's for can take down at any moment if they feel like it.\n\nImagine being dumb enough to pay for it as well!",
+      "gold": "unbacked",
+      "predicted": "argued"
+    },
+    {
+      "text": "Doubt it, the official \"package\" is just the entire folder and you boot the \"exe\" with a command line prompt and go straight into the editor.\n\nI wonder if its just simply too big for an appimage?\n\nUnity managed to give you a package for its launcher at least.",
+      "gold": "argued",
+      "predicted": "argued"
+    },
+    {
+      "text": "I just..\n\nIts such a weird place to be in life to have bought technology years ago and to have it be more valuable now than it used to be. I don't think I'd would have bought a steam deck at this pricepoint, whereas I bought two at the lower price point (the LED, then the OLED)",
+      "gold": "firsthand",
+      "predicted": "quip"
+    },
+    {
+      "text": "Hell yes, fuck fandom they've ruined so many of the best wikis",
+      "gold": "quip",
+      "predicted": "argued"
+    },
+    {
+      "text": "Reading this thread makes me feel like I'm taking crazy pills. This game was mediocre as fuck. The open world was practically empty. There were like five characters with anything but a superficial motivation. Combat is point and click nothingness, there is no strategy whatsoever and the AI is practically nonexistent. Constant bugs and graphical issues. The big fixes only fixes the very last thing.",
+      "gold": "unbacked",
+      "predicted": "argued"
+    },
+    {
+      "text": "This isn't how you do it. Compromising an OS with kernel level anti cheat isn't the compromise I'm willing to make just to get some gamers to switch off a terrible OS.",
+      "gold": "unbacked",
+      "predicted": "argued"
+    },
+    {
+      "text": "I mean it's being sold as \"Digital Deluxe Edition DLC\" and it contains in-game items, which I'd say goes against \"a complete and immersive gaming experience without the need for additional purchases\" (apart from the stuff that's not in the game that you have to purchase.)",
+      "gold": "argued",
+      "predicted": "argued"
+    },
+    {
+      "text": "So much for Squadron 42 avoiding the buzz saw of GTA marketing.",
+      "gold": "quip",
+      "predicted": "argued"
+    },
+    {
+      "text": "Small, weak people need an excuse for why they feel so small. One that deflects the blame from where it truly belongs--on them, for lacking the strength and courage to be better than they are. For lacking the spine to take a more difficult, more noble road.\n\nSo just believe it's not your fault, it's some mighty shadowy conspiracy thing of great darkness. Not just you being a coward and weakling. Much more preferable.",
+      "gold": "quip",
+      "predicted": "argued"
+    },
+    {
+      "text": "I have literally bought the last few brand new, 2026 PS5 games on disc. I'm getting Control Resonant this week on disc. \n\nIf you mean GTAVI, then yeah that's bonkers. But you can get most games with a physical disc currently.",
+      "gold": "firsthand",
+      "predicted": "argued"
+    },
+    {
+      "text": "Companies would still be cutting flour with chalk if they had their way. \"It's limiting blah blah blah\" that's the point you corpos, consumer rights are about the consumer not the bottom line",
+      "gold": "unbacked",
+      "predicted": "argued"
+    },
+    {
+      "text": "Civ......7 is coming out???? Oh! Oh! So I guess I'm just going to need a time machine??? Is that it??? Because I'm an adult now!!! Working 6 damn days a week!!! Explain how I can just stop time, and spend 72 hours straight fighting off Gondi and his aggressive ass nukes!!! Explain that shit to me!!! Already work 16 hours a day 6 days a week! Now I gotta defend the world from nukes through politics, and science, and WE ALREADY KNOW WE'RE ALREADY GOING TO BUILD AN ARMY AND BLOW EVERYONE UP!!! WHY WE GOTTA DANCE THIS DANCE??? \n\n*huffs......huffs.......huffs......* \n\nSo how's everybodys day going? Ready for Thanksgiving? I sure am looking forward to relatives you only twice a year getting drunk and talking politics 3 weeks after the election! What could go wrong??? \n\nHmmmmm.........maybe butter knives are the sharpest thing I should put on this table......",
+      "gold": "quip",
+      "predicted": "argued"
+    },
+    {
+      "text": "\"we interviewed only haters and they all of them complained about the thing they hate\"\n\nWhat a garbage article.",
+      "gold": "quip",
+      "predicted": "argued"
+    },
+    {
+      "text": "Reminder that Elite:Dangerous is a game that has all that star citizen has ever promised, today. You can get it on steam.",
+      "gold": "argued",
+      "predicted": "argued"
+    },
+    {
+      "text": "I have no problem if games reached this via a similar model that Larian used here (lots of experienced staff, pre-built systems, 6 years of development, 3 years of expertly done early-access with a highly engaged player base) but they're not going to. They're going to implement more crunch, more abuse, more destruction of the few people who want to work in games in order to get there. And that's where I have the issue.\n\nI want shorter games, with worse graphics, made by people who get paid more to do less. Because that's what's needed to make truly great games. People who are passionate, not burning themselves out just to barely make deadlines, make great games.",
+      "gold": "argued",
+      "predicted": "argued"
+    },
+    {
+      "text": "Valve kills physical ownership of games: I sleep\n\nGames exclusive to Origin: I sleep\n\nGames exclusive to whatever the fuck Blizzard made: I sleep\n\nGames exclusive to Microsoft Store: I sleep\n\nGames exclusive to Epic: REAL SHIT",
+      "gold": "quip",
+      "predicted": "argued"
+    },
+    {
+      "text": "I boot the game up through Steam and before their \n\nUNNECESSARY LAUNCHER \n\nloads, the button for \n\nUPGRADE TO MORE MONEY\n\nloads before the \n\nPLAY GAME button loads. \n\nI have a high end machine and gigabit. \n\nDon\u2019t defend this. It\u2019s a great game but.. c\u2019mon.",
+      "gold": "firsthand",
+      "predicted": "argued"
+    },
+    {
+      "text": "Why did Polygon include the CTWC video at the top of their page instead of BlueScuti's?\n\nThey are already stealing his views reposting his entire video with some bullshit commenting from them over the top of it and now Polygon is supporting that kind of behavior.\n\nThe kid did the work, give him the damn views.",
+      "gold": "argued",
+      "predicted": "argued"
+    }
+  ]
+}
