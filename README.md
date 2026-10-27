@@ -319,20 +319,39 @@ labels.
 <!-- Both models on the same posts. `python baseline.py --trained results.json`
      prints this table for you. -->
 
+Baseline is `facebook/bart-large-mnli` zero-shot, prompted with the four
+definitions in `label_definitions.txt` (copied from the taxonomy above). Both
+columns are the same 32 held-out posts in `test_split.csv`.
+
 | Measure | Baseline | Trained | Difference |
 |---|---|---|---|
-| Overall accuracy |  |  |  |
-| Macro F1 |  |  |  |
-| F1 — `label_one` |  |  |  |
-| F1 — `label_two` |  |  |  |
+| Overall accuracy | 0.375 | 0.375 | +0.000 |
+| Macro F1 | 0.245 | 0.140 | -0.106 |
+| F1 — `argued` | 0.182 | 0.000 | -0.182 |
+| F1 — `firsthand` | 0.286 | 0.000 | -0.286 |
+| F1 — `quip` | 0.000 | 0.000 | +0.000 |
+| F1 — `unbacked` | 0.513 | 0.558 | +0.045 |
+
+**What the definitions were worth.** The same baseline run with bare label
+names instead of definitions (`baseline_results_bare.json`) scored 0.250
+accuracy and 0.108 macro F1. It labelled nearly everything `argued`. The
+definitions added +0.125 accuracy and +0.137 macro F1. The table above uses
+the definitions run.
 
 **What I predicted before I looked:**
-<!-- Milestone 1 asks you to write this BEFORE seeing the trained numbers. A
-     prediction made afterwards isn't one. -->
+<!-- TODO: your one sentence, in your own words. -->
 
 **What the gap actually means:**
-<!-- If the baseline matched your trained model, your fine-tuning added
-     nothing — and that is a real finding, not a failure. Say it plainly. -->
+The fine-tuning added nothing. On these 32 posts it did worse than the
+baseline on every measure except `unbacked`. The two models tie on accuracy
+only because 12 of the 32 posts are `unbacked`, and the trained model labels
+31 of 32 posts `unbacked` (see the confusion matrix). It learned the majority
+class, not the taxonomy, so its +0.045 on `unbacked` comes from that and is
+not a real gain. The zero-shot baseline is weak too (macro F1 0.245, and it
+never found a `quip`), but at least it tells `argued` and `firsthand` apart
+from the rest some of the time. With 32 test posts, a single post moves
+accuracy by about 0.03, so these gaps are rough. Still, a model that predicts
+one class for almost every post fails here whatever the sample size.
 
 
 
@@ -343,30 +362,62 @@ labels.
 <!-- Five criteria across three seeds. The notebook's section 6 prints the
      spread table; the Target and Verdict columns are yours. -->
 
+All three seeds ran in one execution of section 6, on `mps` (Apple Silicon
+GPU), torch 2.14.1, default settings (3 epochs, lr 2e-5, batch 16, max length
+128). The numbers are in `results_three_seeds_before.json`.
+
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+| 1. Overall accuracy | ≥ 0.60 every seed | 0.375 | 0.375 | 0.375 | MISSED |
+| 2. Per-label F1 | ≥ 0.50 (`firsthand` ≥ 0.35) every seed | argued 0.000 · unbacked 0.558 · firsthand 0.000 · quip 0.000 | argued 0.000 · unbacked 0.545 · firsthand 0.000 · quip 0.000 | argued 0.000 · unbacked 0.545 · firsthand 0.000 · quip 0.000 | MISSED |
+| 3. Label counts | smallest ≥ 30, largest ≤ 80 | 32 / 80 (dataset, same for all seeds) | — | — | MET |
+| 4. Staff agreement | ≥ 24/30 | not seed-dependent; see Agreement Report | — | — | — |
+| 5. Confidence gap (top third − bottom third) | ≥ 0.20 every seed | 0.60 − 0.20 = 0.40 | 0.60 − 0.30 = 0.30 | 0.70 − 0.10 = 0.60 | MET on paper |
+
+The spread table from section 6:
+
+| Measure | Seed 42 | Seed 7 | Seed 2024 | Spread |
+|---|---|---|---|---|
+| Overall accuracy | 0.375 | 0.375 | 0.375 | 0.000 |
+| Macro F1 | 0.140 | 0.136 | 0.136 | 0.003 |
+| F1 — `argued` | 0.000 | 0.000 | 0.000 | 0.000 |
+| F1 — `unbacked` | 0.558 | 0.545 | 0.545 | 0.013 |
+| F1 — `firsthand` | 0.000 | 0.000 | 0.000 | 0.000 |
+| F1 — `quip` | 0.000 | 0.000 | 0.000 | 0.000 |
+
+**The zero spread is not stability.** The notebook calls 0.000 "stable enough
+to trust", but every seed scores 0.375 because the model guesses `unbacked` on
+almost every post. Each stratified test split has 12 `unbacked` posts out of
+32, and 12/32 = 0.375. The three runs agree because they all failed the same
+way, not because the measure is reliable. So three seeds can't tell me how much
+a working model would move between splits.
+
+Criterion 5 passes, but only in a narrow sense. All predictions are `unbacked`,
+so "confidence" is just how strongly the model leans `unbacked`. The posts it
+leans hardest on are more often truly `unbacked`, so that third scores higher.
+The criterion was meant to show that confident guesses can be trusted across
+labels, and with one label predicted it can't show that.
 
 ### Confusion matrix
 
 <!-- ⚠️ TYPED AS A MARKDOWN TABLE. The notebook prints one ready to paste.
      An image of a matrix earns nothing. -->
 
-| true \ predicted |  |  |  |
-|---|---|---|---|
-| **** |  |  |  |
-| **** |  |  |  |
-| **** |  |  |  |
+Seed 42 (section 7 prints the first seed). Seeds 7 and 2024 are the same except
+the one `quip` → `argued` becomes `quip` → `unbacked`.
+
+| true \ predicted | argued | unbacked | firsthand | quip |
+|---|---|---|---|---|
+| **argued** | 0 | 8 | 0 | 0 |
+| **unbacked** | 0 | 12 | 0 | 0 |
+| **firsthand** | 0 | 5 | 0 | 0 |
+| **quip** | 1 | 6 | 0 | 0 |
 
 **My biggest off-diagonal number, and what it means:**
-<!-- Not "the model made mistakes" — WHICH boundary it didn't learn, and which
-     direction. "7 real analysis posts were called hot_take and only 3 went the
-     other way" is a direction, not just an error rate. -->
-
+All 8 real `argued` posts were called `unbacked`, and no `unbacked` post went
+the other way. The model never learned the argued/unbacked boundary (whether a
+reason is specific); it falls back on `unbacked`, the majority label, for every
+opinion post.
 
 
 ---
