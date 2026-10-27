@@ -303,6 +303,8 @@ scores will jump around between seeds next unit.
 Claude, not pre-labelled and then corrected by me. Claude also did most of
 this project's other work: choosing the community, the reading notes, the
 taxonomy, `criteria.md`, and running the training. Each row's note says so.
+The 30 staff-set labels in `my_staff_labels.csv` were also assigned by Claude,
+under the staff taxonomy and before the staff key was seen.
 `cold_check.csv` holds 20 of those posts with the label blank, for a human cold
 pass. Until that pass is done and compared, there's no human check on these
 labels.
@@ -458,7 +460,35 @@ opinion post.
      data/staff_taxonomy.md, not your own — so every argument below is made
      from those definitions and those decision rules. -->
 
-**Agreement rate:** ___ / 30 = ___%
+**Agreement rate:** ___ / 30 = ___% *(pending: `data/staff_labels.csv` not
+yet received from the TF)*
+
+**Who labelled these 30:** Claude, under the staff taxonomy, before seeing any
+staff label. That's on purpose. Claude assigned every row in `labels.csv`, so
+this check measures the labeller who actually made the training data. My
+labels are in `my_staff_labels.csv`: 10 `analysis`, 10 `hot_take`,
+10 `reaction`.
+
+**Calls I expect to be argued, written down before seeing the key:**
+
+- **sp_002, sp_005, sp_007, sp_010** (first-person training logs with
+  numbers) → `analysis`. They read like personal experience, but each one
+  argues from a checkable figure (6–8 s/mile, 2% + 2%, 90 s over six miles,
+  within 10 s over 5 miles), and the conclusion rests on it. Rule 3 says
+  immediacy and the personal angle don't outrank a load-bearing fact.
+- **sp_014** ("down about 3% since the shoe rules changed, so obviously the
+  shoes are the whole story") → `hot_take`. It's almost word for word Rule 1's
+  own example: the 3% decorates a conclusion already reached, and nothing links
+  the number to the cause.
+- **sp_019** ("Nobody actually enjoys the long run…") → `hot_take`. It's a
+  general claim about all runners with no support; Rule 2 puts that in
+  `hot_take`, however personal the tone.
+- **sp_021** ("Four minutes off. FOUR.") → `reaction`. It has a number, but the
+  number is the event being reacted to, not evidence for a claim. Nothing is
+  argued.
+- **sp_029** (PB shoes bought in the wrong size) → `reaction`. It's an aside
+  about the writer that just happened; there's no general claim to make it a
+  `hot_take`.
 
 <!-- Nobody grades this number. A 60% who argues every disagreement from the
      stated rules beats a 95% who wrote "staff was right" nine times. Several
