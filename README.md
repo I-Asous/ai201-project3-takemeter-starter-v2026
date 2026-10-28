@@ -516,6 +516,18 @@ strongest case against it:
 No criterion was revised. All five named a number that could be checked, so
 none was broken. Criteria 1 and 2 were missed, not broken.
 
+**The number that surprised me most: criterion 5.** Expected: if the model
+missed accuracy and per-label F1, its confidence would be noise too, and the
+gap between its most and least confident thirds would land near zero, a miss.
+Got: 0.40, 0.30 and 0.60, comfortably over 0.20, from a model that predicted
+`unbacked` for 31 or 32 of 32 posts. The criterion's wording didn't account
+for that case. It assumes the model is choosing between labels, so a model
+that always picks the same label can still pass it. This is the verdict a
+cold reader should push on. If I wrote it again, I'd add "and the model
+predicts at least three labels on every seed" to the target. That's a lesson
+for the next set of criteria, not a revision of this one, because this one
+could be checked and gave a verdict.
+
 
 
 ---
