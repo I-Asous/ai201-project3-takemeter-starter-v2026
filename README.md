@@ -468,8 +468,53 @@ definitions, which no one else has ever applied. The `argued`/`unbacked` line
 fixes the collapse, and with 37 `argued` training posts it's a genuinely hard
 pair for this much data.
 
+**Criterion 2, label by label.** In the before-run every label except
+`unbacked` scores 0.000 on all three seeds, and the confusion matrix sends
+every one of their test posts to `unbacked`: 8/8 `argued`, 5/5 `firsthand`,
+6 or 7 of 7 `quip`. That's one shared cause (the collapse above), not three
+separate ones. Once the collapse is fixed (Run Log — After), the labels come
+apart, and each gets its own cause:
+
+- `firsthand`: **too few examples.** It has 22 training posts and 5 test
+  posts, and it's still 0.000 on every seed after the fix. It is never
+  predicted at all. The agreement report says the labelling is consistent, so
+  the model is short on examples, not getting contradictory ones.
+- `quip`: **too few examples, made worse by a small test split.** Its F1
+  swings from 0.000 to 0.500 across seeds after the fix, on 7 test posts. With
+  so few posts, one post more or less right decides the score.
+- `argued`: **a genuinely hard pair.** After the fix it reaches 0.38–0.56, and
+  its misses go to `unbacked` (3–5 of 8 per seed). That's the boundary my own
+  taxonomy names as hardest ("is the reason *specific*?"). The labelling of
+  that kind of boundary held up against staff (all four HARD `analysis` vs
+  `hot_take` posts matched), so this is the model, not the labels.
+
 **Criterion 5 (met, but hollow).** No miss to diagnose, but the pass doesn't
 show what the criterion was for, for the reason in the table.
+
+**Arguing the opposite verdict on each MET.** Each MET was challenged with the
+strongest case against it:
+
+- *Criterion 3 should be MISSED:* it was only met by dropping 21 `unbacked`
+  rows at random after labelling. **Still MET.** The criterion is about
+  counts in `labels.csv`, and the counts (32 and 80 of 208) meet it. How it got
+  there is disclosed in The Dataset. Dropping rows didn't bend the target,
+  but it did leave less data than was collected.
+- *Criterion 4 should be MISSED or untestable:* "I match the staff labels",
+  but Claude labelled the 30, not me. **Still MET, with the caveat stated.**
+  The criterion exists to check whoever labelled `labels.csv`, and that's
+  Claude, so it tests the right labeller. It says nothing about a human's
+  consistency. The post order also hinted at the labels (see the Agreement
+  Report).
+- *Criterion 5 should be MISSED:* in the before-run the model predicts one
+  label, so the gap measures nothing useful. **MET by the letter**, because
+  the criterion names only the gap, and 0.40, 0.30 and 0.60 all clear 0.20.
+  This is the one where the opposite argument is strongest. The verdict
+  stands, but the table marks it "hollow" rather than calling it a clean pass.
+  In the after-run it holds on a model that predicts several labels (0.40,
+  0.30, 0.50), and there it means what it was meant to.
+
+No criterion was revised. All five named a number that could be checked, so
+none was broken. Criteria 1 and 2 were missed, not broken.
 
 
 
