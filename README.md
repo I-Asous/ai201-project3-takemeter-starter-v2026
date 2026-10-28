@@ -460,16 +460,16 @@ opinion post.
      data/staff_taxonomy.md, not your own — so every argument below is made
      from those definitions and those decision rules. -->
 
-**Agreement rate:** ___ / 30 = ___% *(pending: `data/staff_labels.csv` not
-yet received from the TF)*
+**Agreement rate:** 30 / 30 = 100%
 
 **Who labelled these 30:** Claude, under the staff taxonomy, before seeing any
 staff label. That's on purpose. Claude assigned every row in `labels.csv`, so
 this check measures the labeller who actually made the training data. My
-labels are in `my_staff_labels.csv`: 10 `analysis`, 10 `hot_take`,
-10 `reaction`.
+labels are in `my_staff_labels.csv`, the staff key is in
+`data/staff_labels.csv`, and the comparison is in `agreement_results.json`.
 
-**Calls I expect to be argued, written down before seeing the key:**
+**Calls I expected to be argued, written down before seeing the key** (all
+eight matched staff):
 
 - **sp_002, sp_005, sp_007, sp_010** (first-person training logs with
   numbers) → `analysis`. They read like personal experience, but each one
@@ -490,47 +490,55 @@ labels are in `my_staff_labels.csv`: 10 `analysis`, 10 `hot_take`,
   about the writer that just happened; there's no general claim to make it a
   `hot_take`.
 
-<!-- Nobody grades this number. A 60% who argues every disagreement from the
-     stated rules beats a 95% who wrote "staff was right" nine times. Several
-     of the 30 were chosen because they're genuinely ambiguous — you should be
-     winning some of these. -->
-
 **Disagreements**
 
-<!-- Three lines each: the post, both labels, and who you think is right and
-     why — grounded in the staff definitions you were both applying.
+None. With no disagreements there's nothing to sort into piles (a), (b) or (c).
+The closest thing to adjudication is comparing which posts each side thought
+were hard:
 
-     Then sort each into one of three piles:
-       (a) the rule covered it and I applied it loosely → a consistency problem
-       (b) the rule genuinely doesn't say               → a gap in the definitions
-       (c) the rule is ambiguous here and my reading is defensible → argue it.
-           This is a legitimate win.
+| Post | Staff flagged HARD | I flagged in advance | Both labels |
+|---|---|---|---|
+| sp_005 | yes | yes | `analysis` |
+| sp_010 | yes | yes | `analysis` |
+| sp_014 | yes | yes | `hot_take` |
+| sp_019 | yes | yes | `hot_take` |
+| sp_029 | yes | yes | `reaction` |
+| sp_020 | yes | no | `hot_take` |
+| sp_028 | yes | no | `reaction` |
+| sp_002, sp_007 | no | yes | `analysis` |
+| sp_021 | no (staff's note covers the same point) | yes | `reaction` |
 
-     Pile (a) is the one that matters most for your diagnosis: if you applied a
-     written rule two different ways on 30 posts, that is direct evidence about
-     what you did across your own 200. -->
-
-**1.**
-> *The post:*
->
-> *Staff said / I said:*
->
-> *My call, and why:*
->
-> *Which pile:*
-
-**2.**
-> *The post:*
->
-> *Staff said / I said:*
->
-> *My call, and why:*
->
-> *Which pile:*
+The two I missed are the same kind of case. In sp_020 ("every injury thread is
+the same injury") and sp_028 ("third DNF this year"), something *countable* is
+mentioned but no count is used to argue anything. I labelled both correctly,
+but I didn't see them as hard, so the "a number has to be load-bearing" check
+was working without my noticing it.
 
 **What the pattern in my disagreements tells me:**
 
+A perfect score is weaker evidence than it looks, for three reasons:
 
+1. **The set is in order.** Posts sp_001–010 are all `analysis`, 011–020 all
+   `hot_take` and 021–030 all `reaction`. I labelled post by post from the
+   text, but anyone reading in file order sees the blocks, and I can't rule out
+   that the order helped on the borderline posts.
+2. **The staff rules are tight and come with worked examples.** sp_014 is
+   nearly word for word Rule 1's example. Three labels, four rules and
+   examples on the hardest boundary make this an easier task than my own
+   four-label taxonomy.
+3. **It's the same labeller as `labels.csv`, not a second human.** It shows
+   Claude applies a *written* rule consistently. It doesn't show those rules
+   match what a person would mean, and there is still no human check on
+   `labels.csv` (`cold_check.csv` is still unlabelled).
+
+Still, it counts for something in Milestone 4. When a labeller who just
+matched an outside key 30/30, including all seven posts staff marked HARD,
+applies my own `argued`/`unbacked` rule, the model's collapse to `unbacked` is
+unlikely to come mostly from inconsistent labelling (pile (a)). It points more
+at too little data per label and a boundary ("is the reason *specific*?") that
+DistilBERT can't learn from ~140 training posts. The one weakness in the labels
+it can't clear is a gap in my own definitions, pile (b), because those were
+never checked against anyone else.
 
 ---
 
