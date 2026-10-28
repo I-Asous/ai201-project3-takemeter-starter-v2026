@@ -341,7 +341,9 @@ definitions added +0.125 accuracy and +0.137 macro F1. The table above uses
 the definitions run.
 
 **What I predicted before I looked:**
-<!-- TODO: your one sentence, in your own words. -->
+No prediction was written down before the trained numbers came in, so there
+isn't one to report. Writing one now, after seeing the results, wouldn't be a
+prediction.
 
 **What the gap actually means:**
 The fine-tuning added nothing. On these 32 posts it did worse than the
@@ -373,7 +375,7 @@ GPU), torch 2.14.1, default settings (3 epochs, lr 2e-5, batch 16, max length
 | 1. Overall accuracy | ≥ 0.60 every seed | 0.375 | 0.375 | 0.375 | MISSED |
 | 2. Per-label F1 | ≥ 0.50 (`firsthand` ≥ 0.35) every seed | argued 0.000 · unbacked 0.558 · firsthand 0.000 · quip 0.000 | argued 0.000 · unbacked 0.545 · firsthand 0.000 · quip 0.000 | argued 0.000 · unbacked 0.545 · firsthand 0.000 · quip 0.000 | MISSED |
 | 3. Label counts | smallest ≥ 30, largest ≤ 80 | 32 / 80 (dataset, same for all seeds) | — | — | MET |
-| 4. Staff agreement | ≥ 24/30 | not seed-dependent; see Agreement Report | — | — | — |
+| 4. Staff agreement | ≥ 24/30 | 30/30 (labelling check, same for all seeds) | — | — | MET |
 | 5. Confidence gap (top third − bottom third) | ≥ 0.20 every seed | 0.60 − 0.20 = 0.40 | 0.60 − 0.30 = 0.30 | 0.70 − 0.10 = 0.60 | MET on paper |
 
 The spread table from section 6:
@@ -431,22 +433,43 @@ opinion post.
 
 | # | Criterion | Target | Verdict | How I decided |
 |---|---|---|---|---|
-| 1 |  |  |  |  |
-| 2 |  |  |  |  |
-| 3 |  |  |  |  |
-| 4 |  |  |  |  |
-| 5 |  |  |  |  |
+| 1 | Overall accuracy | ≥ 0.60 on every seed | MISSED | 0.375 on all three seeds, which is exactly the share of `unbacked` posts in each test split. |
+| 2 | Per-label F1 | ≥ 0.50 (`firsthand` ≥ 0.35) on every seed | MISSED | `argued`, `firsthand` and `quip` are 0.000 on all three seeds; only `unbacked` clears 0.50 (0.545–0.558). |
+| 3 | Label counts | smallest ≥ 30, largest ≤ 80 | MET | `labels.csv` has `firsthand` 32 and `unbacked` 80, out of 208. It met the target only because 21 `unbacked` rows were dropped (see The Dataset). |
+| 4 | Staff agreement | ≥ 24/30 | MET | `agreement_results.json`: 30/30. |
+| 5 | Confidence gap | top third ≥ 0.20 more accurate than bottom third, every seed | MET, but hollow | Gaps of 0.40, 0.30 and 0.60. With the model predicting one label, "confidence" just measures how strongly it leans `unbacked`, so the gap says nothing about whether its confident guesses can be trusted across labels. |
 
 **Diagnoses**
 
-<!-- For each miss: the cause, and how you know. The four common causes are:
-     too few examples for a label, a boundary you applied inconsistently, a
-     genuinely hard label pair, and a task the model can't reach from this
-     much data.
+**Criteria 1 and 2: the model underfit and fell back on the majority label.**
+The cause is a model that can't reach the task from this much data and this
+much training. It isn't a labelling problem. How I know:
 
-     ⚠️ Use your agreement report as evidence. It is the only instrument you
-     have that can tell a LABELLING problem from a MODEL problem, and this
-     section is graded on whether you used it that way. -->
+- *The training loss barely moved.* It ended at 1.28–1.31 on all three seeds.
+  A model that spreads its guess evenly over four labels scores ln 4 ≈ 1.386.
+  With 144 training posts and batch size 16, three epochs is only 27 gradient
+  steps. The model never got far from its starting point, and the cheapest
+  loss reduction from there is to predict the most common label.
+- *The agreement report rules out the obvious labelling cause.* The same
+  labeller that produced `labels.csv` matched an outside key 30/30, including
+  all seven posts staff marked HARD, and the staff rules hinge on the same
+  question as mine (is the fact load-bearing?). If the labels were applied
+  inconsistently, I'd expect it to show up there. It didn't, so pile (a), a
+  rule applied loosely, is unlikely to be the main cause.
+- *The failure doesn't follow any label boundary.* If one boundary had been
+  labelled inconsistently, the errors would cluster on that pair. Instead
+  every label collapses into `unbacked`, including `quip`, which shares little
+  with it. That's the signature of a model that didn't learn, not of a
+  confusing pair.
+
+What the agreement check *can't* clear is pile (b): gaps in my own four-label
+definitions, which no one else has ever applied. The `argued`/`unbacked` line
+("is the reason *specific*?") is still the hardest boundary even if training
+fixes the collapse, and with 37 `argued` training posts it's a genuinely hard
+pair for this much data.
+
+**Criterion 5 (met, but hollow).** No miss to diagnose, but the pass doesn't
+show what the criterion was for, for the reason in the table.
 
 
 
@@ -544,38 +567,100 @@ never checked against anyone else.
 
 ## The Improvement
 
-**What I changed:**
+**What I changed:** One setting: `EPOCHS` from 3 to 10, set in section 2 of
+the notebook. Everything else is unchanged: same data, same labels, same
+learning rate (2e-5), batch size, max length, and the same three seeds (42, 7,
+2024). Section 6 was re-run with `RUN_LABEL = "after"`, so the before-numbers
+in `results_three_seeds_before.json` were kept, and the new ones are in
+`results_three_seeds_after.json`. Same device: `mps`, torch 2.14.1.
 
-**Which diagnosis pointed at it:**
+**Which diagnosis pointed at it:** Criteria 1 and 2 were diagnosed as
+underfitting: the training loss ended at 1.28–1.31, barely below the 1.386 of
+a model that splits its guess evenly over four labels, after only 27 gradient
+steps. The agreement report (30/30) made relabelling the less likely fix. So
+the change targets the amount of training, not the labels.
 
 ### Run Log — After
 
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+| 1. Overall accuracy | ≥ 0.60 every seed | 0.406 | 0.500 | 0.500 | MISSED |
+| 2. Per-label F1 | ≥ 0.50 (`firsthand` ≥ 0.35) every seed | argued 0.444 · unbacked 0.545 · firsthand 0.000 · quip 0.000 | argued 0.556 · unbacked 0.600 · firsthand 0.000 · quip 0.364 | argued 0.375 · unbacked 0.645 · firsthand 0.000 · quip 0.500 | MISSED |
+| 3. Label counts | smallest ≥ 30, largest ≤ 80 | 32 / 80 (dataset, unchanged) | — | — | MET |
+| 4. Staff agreement | ≥ 24/30 | 30/30 (unchanged) | — | — | MET |
+| 5. Confidence gap | ≥ 0.20 every seed | 0.50 − 0.10 = 0.40 | 0.70 − 0.40 = 0.30 | 0.80 − 0.30 = 0.50 | MET |
 
-**Did it help, and how do I know:**
+| Measure | Seed 42 | Seed 7 | Seed 2024 | Spread |
+|---|---|---|---|---|
+| Overall accuracy | 0.406 | 0.500 | 0.500 | 0.094 |
+| Macro F1 | 0.247 | 0.380 | 0.380 | 0.133 |
+| F1 — `argued` | 0.444 | 0.556 | 0.375 | 0.181 |
+| F1 — `unbacked` | 0.545 | 0.600 | 0.645 | 0.100 |
+| F1 — `firsthand` | 0.000 | 0.000 | 0.000 | 0.000 |
+| F1 — `quip` | 0.000 | 0.364 | 0.500 | 0.500 |
 
-<!-- If it didn't, say so. Relabelling that didn't help is a genuinely
-     interesting result and earns full credit. -->
+Confusion matrix after, seed 42:
 
+| true \ predicted | argued | unbacked | firsthand | quip |
+|---|---|---|---|---|
+| **argued** | 4 | 4 | 0 | 0 |
+| **unbacked** | 2 | 9 | 0 | 1 |
+| **firsthand** | 2 | 3 | 0 | 0 |
+| **quip** | 2 | 5 | 0 | 0 |
 
+**Did it help, and how do I know:** Yes, partly, and not enough to meet a
+missed criterion.
+
+- *It fixed the collapse.* Before, the model predicted `unbacked` for 31 or 32
+  of 32 posts on every seed. Now it predicts `argued`, `unbacked` and `quip` on
+  every seed except seed 42, which still never predicts `quip`. Training loss
+  ended at 0.91–0.99 instead of 1.28–1.31, so the model actually moved.
+- *Every averaged measure went up on every seed.* Macro F1 went from 0.14 to
+  0.25–0.38, and accuracy from 0.375 to 0.41–0.50. `argued` went from 0.000 to
+  0.38–0.56 F1, so the model now learns part of the `argued`/`unbacked`
+  boundary.
+- *It still misses criteria 1 and 2 on every seed.* The best accuracy is 0.50,
+  against a target of 0.60. `firsthand` is still 0.000 everywhere: it's never
+  predicted correctly on any seed.
+- *The spread is now real, and it's large.* Accuracy moves 0.094 and macro F1
+  0.133 across seeds; `quip` F1 swings from 0.000 to 0.500. With the collapse
+  gone, the seeds finally disagree. That shows how much of any single number
+  here comes from the split: with 5–8 test posts per minority label, one post
+  moves a label's F1 by 0.1–0.2.
+- *Criterion 5 now means something.* The gaps (0.40, 0.30, 0.50) are measured
+  on a model that predicts several labels, so a confident guess really is more
+  often right. It was MET before only in the hollow sense described above.
 
 ---
 
 ## What's Still Broken
 
-<!-- For each criterion still missed: what you'd do, and why you stopped. -->
+**Criterion 1 (accuracy ≥ 0.60), missed on every seed (0.41–0.50).** Next I'd
+add data, not more training. Ten epochs on 144 posts already brought training
+loss to about 0.9 while the test score stays near 0.5, so more epochs would
+mostly memorise. The real ceiling is about 35–55 training examples per label.
+I'd label another ~200 posts, aimed at the thin labels, and re-run all three
+seeds. I stopped because that's a labelling job, not a setting, and it's out
+of scope for this unit.
 
-
+**Criterion 2 (per-label F1), missed on every seed, mainly from `firsthand`
+at 0.000.** `firsthand` has 22 training posts and 5 test posts, and the model
+reads them as `argued` or `unbacked`. That makes sense: a `firsthand` post
+usually makes a claim too, and what sets it apart (the support is the writer's
+own experience) is a subtle cue in 22 examples. The fix is again more
+`firsthand` data, collected on purpose from threads where people describe
+their own play. A cheaper test, if I had kept going, would be class-weighted
+loss, to see whether the model can find `firsthand` at all when missing it
+costs more. I stopped at one change so the before/after comparison stays
+clean.
 
 **The gap between what I meant my labels to capture and what the model
 learned:**
-<!-- Two sentences. Your confusion matrix is the evidence. -->
+I meant the labels to capture *how* a comment supports its point (a checkable
+fact, the writer's own experience, nothing, or just tone). Even after the fix,
+the model mostly learned *whether* a comment sounds like it's making a point:
+in the after-matrix, 5 of 7 `quip` posts and 3 of 5 `firsthand` posts go to
+`unbacked`, and no post is ever called `firsthand`.
 
 
 
